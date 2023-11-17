@@ -31,7 +31,6 @@ func _physics_process(delta):
 		$Pivot/Blaster.shoot()
 			
 		
-
 	var input_dir = Input.get_vector("Left", "Right", "Forward", "Back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
@@ -42,6 +41,9 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+	rpc("_set_position", global_position)
+	rpc("_set_rotation", rotation.y)
 
 func die():
+	rpc("_die")
 	queue_free()
